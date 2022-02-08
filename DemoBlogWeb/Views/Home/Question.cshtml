@@ -1,4 +1,5 @@
-﻿@model Question;
+﻿@using DemoBlogWeb.ViewModels
+@model ViewModel
 
 @{
     ViewData["Title"] = "Question";
@@ -6,51 +7,66 @@
 
 <div class = "container mt-5">
     <div>
-        <h1>@Model.Title</h1>
+        <h1>@Model.Question.Title</h1>
         <br />
-        <span class="text-info">Asked time: </span><span>@Model.AskedTime</span>
+        <span class="text-info">Asked time: </span><span>@Model.Question.AskedTime</span>
+        <span class="text-info">Tags:</span> <span>@Model.Question.QuestionTag.Name</span>
+       
     </div>
     <div>
         <hr />
         <div class = "p-3 m-3">
-            @Model.QuestionBody
+            @Model.Question.QuestionBody
         </div>
         <hr />
         <div class = "container m-3">
-            <span class = "text-success">@Model.Answers.Count</span>
-            <span class = "text-success">Answers</span>
-            <div class = "p-3 m-3 bg-success">
-                @if(Model.Answers != null)
+            <span class = "text-info text-left">@Model.Question.Answers.Count Answers</span>
+            <div class = "p-3 m-3 ">
+                @if(@Model.Question.Answers != null)
                 {
-                    @foreach(Answer obj in Model.Answers)
+                    @foreach(Answer obj in @Model.Question.Answers)
                 {
-                    <div>
-                        @obj.AnswerBody
+                    <div class = "container">
+                        <div class = "p-2 m-2">
+                            @obj.AnswerBody
+                        </div>
+                        <div class = "text-end">
+                           <span class = "text-info">Answered at: </span><span>@obj.AnswerTime </span>
+                        </div>
                     </div>
+                    <hr />
                 }
                 }
                 
+                
             </div>
-
-        @*</div>
-        <div class = "container">
+            <div class = "container">
             <h5>Your Answer</h5>
             <div>
-                <form method = "post">
+                <form method = "post" asp-action = "CreateAnswer">
                      <div class = "form-group">
-                        <label asp-for=""></label>
-                        <textarea rows="10" asp-for="QuestionBody" class = "form-control"></textarea>
-                        <span asp-validation-for="QuestionBody" class = "text-danger"></span>
+                        <input asp-for ="@Model.Question.Id" hidden class = "form-control" />
                     </div>
+                     <div class = "form-group">
+                        <textarea rows="10" asp-for="@Model.Answer.AnswerBody" class = "form-control"></textarea>
+                        <span asp-validation-for="@Model.Answer.AnswerBody" disabled class = "text-danger"></span>
+                    </div>
+                    <input type = "submit" class= "btn btn-primary "value="Post Your Answer" />
+                <a asp-controller = "Home" asp-action="Index" class = "btn btn-secondary">
+                Back
+            </a>
                 </form>
             </div>
             <div>
-           <a asp-controller = "Home" asp-action="CreateQuestion" class = "btn btn-primary ">
-                Post The Answer
-            </a>
+
         </div>
-        </div>*@
         
     </div>
 </div>
 
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}

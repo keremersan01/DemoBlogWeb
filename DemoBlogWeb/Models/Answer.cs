@@ -14,7 +14,7 @@ namespace DemoBlogWeb.Models
 		[Required]
 		public string AnswerBody { get; set; }
 		public DateTime AnswerTime { get; set; } = DateTime.Now;
-		[Required]
+		[Required, MaxLength(30000), Display(Name = "Answer Body")]
 		public Question Question { get; set; }
 
 	}

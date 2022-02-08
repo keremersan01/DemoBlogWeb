@@ -16,6 +16,7 @@ namespace DemoBlogWeb.Data
         }
         public DbSet<Question> Questions { get; set; }
         public DbSet<Answer> Answers { get; set; }
-        
+        public DbSet<QuestionTag> QuestionTags { get; set; }
+
     }
 }

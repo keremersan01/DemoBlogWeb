@@ -17,5 +17,7 @@ namespace DemoBlogWeb.Models
         public string QuestionBody { get; set; }
         public DateTime AskedTime { get; set; } = DateTime.Now;
         public ICollection<Answer> Answers { get; set; }
+        [Required]
+        public QuestionTag QuestionTag { get; set; }
     }
 }

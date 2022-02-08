@@ -1,8 +1,10 @@
 ﻿using DemoBlogWeb.Data;
 using DemoBlogWeb.Models;
+using DemoBlogWeb.ViewModels;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Diagnostics;
+using System.Dynamic;
 
 namespace DemoBlogWeb.Controllers
 {
@@ -26,7 +28,8 @@ namespace DemoBlogWeb.Controllers
         public IActionResult Index()
         {
            
-            IEnumerable<Question> questionList = _dbContext.Questions.Include(o => o.Answers).ToList();
+            IEnumerable<Question> questionList = _dbContext.Questions.Include(o => o.Answers)
+                .Include(o => o.QuestionTag).ToList();
             
            
             return View(questionList);
@@ -35,33 +38,50 @@ namespace DemoBlogWeb.Controllers
 
         public IActionResult Question(int? id)
         {
-            var obj = _dbContext.Questions.Include(o => o.Answers).SingleOrDefault(u=>u.Id == id);
-            return View(obj);
+            ViewModel mymodel = new ViewModel();
+            mymodel.Question = _dbContext.Questions.Include(question => question.Answers)
+                .Include(o => o.QuestionTag).SingleOrDefault(u => u.Id == id);
+            mymodel.Answer = new Answer();
+            mymodel.Answer.Question = mymodel.Question;
+            return View(mymodel);
         }
 
         public IActionResult CreateQuestion()
         {
-            return View();
+            QuestionAndTagModel model = new QuestionAndTagModel();
+            return View(model);
         }
         [HttpPost]
-        public IActionResult CreateQuestion(Question obj)
+        public IActionResult CreateQuestion(QuestionAndTagModel obj)
         {
-            if (obj.Title == obj.QuestionBody.ToString())
+            if (obj.Question.Title == obj.Question.QuestionBody.ToString())
             {
                 ModelState.AddModelError("CustomError", "The title should be different from the question body");
             }
-            if(ModelState.IsValid)
-            {
-                _dbContext.Questions.Add(obj);
+
+                obj.Question.QuestionTag = obj.QuestionTag;
+
+                _dbContext.QuestionTags.Add(obj.QuestionTag);
+                _dbContext.Questions.Add(obj.Question);
+              
                 _dbContext.SaveChanges();
                 return RedirectToAction("Index");
-            }
-            return View(obj);
+            
+            
         }
 
-        public IActionResult CreateAnswer()
+        [HttpPost]
+        public IActionResult CreateAnswer(ViewModel model)
         {
-            return View();
+            
+            Question question = _dbContext.Questions.Find(model.Question.Id);
+
+            model.Answer.Question = question;
+                
+                    _dbContext.Answers.Add(model.Answer);
+                    _dbContext.SaveChanges();
+                    return RedirectToAction("Index");
+
         }
 
 

@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoBlogWeb.Migrations
 {
     [DbContext(typeof(DemoBlogDbContext))]
-    [Migration("20220207155321_AddEntitiesToDb")]
+    [Migration("20220208194019_AddEntitiesToDb")]
     partial class AddEntitiesToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -39,12 +39,12 @@ namespace DemoBlogWeb.Migrations
                     b.Property<DateTime>("AnswerTime")
                         .HasColumnType("datetime2");
 
-                    b.Property<int>("questionId")
+                    b.Property<int>("QuestionId")
                         .HasColumnType("int");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("questionId");
+                    b.HasIndex("QuestionId");
 
                     b.ToTable("Answers");
                 });
@@ -62,26 +62,62 @@ namespace DemoBlogWeb.Migrations
 
                     b.Property<string>("QuestionBody")
                         .IsRequired()
+                        .HasMaxLength(30000)
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("QuestionTagId")
+                        .HasColumnType("int");
 
                     b.Property<string>("Title")
                         .IsRequired()
-                        .HasColumnType("nvarchar(max)");
+                        .HasMaxLength(150)
+                        .HasColumnType("nvarchar(150)");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("QuestionTagId");
 
                     b.ToTable("Questions");
                 });
 
+            modelBuilder.Entity("DemoBlogWeb.Models.QuestionTag", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int");
+
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"), 1L, 1);
+
+                    b.Property<string>("Name")
+                        .IsRequired()
+                        .HasMaxLength(15)
+                        .HasColumnType("nvarchar(15)");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("QuestionTags");
+                });
+
             modelBuilder.Entity("DemoBlogWeb.Models.Answer", b =>
                 {
-                    b.HasOne("DemoBlogWeb.Models.Question", "question")
+                    b.HasOne("DemoBlogWeb.Models.Question", "Question")
                         .WithMany("Answers")
-                        .HasForeignKey("questionId")
+                        .HasForeignKey("QuestionId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("question");
+                    b.Navigation("Question");
+                });
+
+            modelBuilder.Entity("DemoBlogWeb.Models.Question", b =>
+                {
+                    b.HasOne("DemoBlogWeb.Models.QuestionTag", "QuestionTag")
+                        .WithMany()
+                        .HasForeignKey("QuestionTagId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("QuestionTag");
                 });
 
             modelBuilder.Entity("DemoBlogWeb.Models.Question", b =>

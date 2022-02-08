@@ -1,23 +1,31 @@
-﻿@model Question
+﻿@using DemoBlogWeb.ViewModels
+@model QuestionAndTagModel
+
 @{
     ViewData["Title"] = "CreateQuestion";
 }
 
 <div class = "container">
-    <div class = "border p-3 mt-4">
+    <div class = "border p-3 mt-4 border-secondary">
         <form method = "post">
             <h2 class = "text-primary">Ask Question</h2>
             @*<div asp-validation-summary= "All"></div>*@
             <div class = "form-group">
-                <label asp-for="Title"></label>
-                <input type = "text" asp-for="Title" class = "form-control"/>
-                <span asp-validation-for="Title" class = "text-danger"></span>
+                <label asp-for="@Model.Question.Title"></label>
+                <input type = "text" asp-for="@Model.Question.Title" class = "form-control border border-secondary"/>
+                <span asp-validation-for="@Model.Question.Title" class = "text-danger"></span>
             </div>
              <div class = "form-group">
-                <label asp-for="QuestionBody"></label>
-                <textarea rows="10" asp-for="QuestionBody" class = "form-control"></textarea>
-                <span asp-validation-for="QuestionBody" class = "text-danger"></span>
+                <label asp-for="@Model.Question.QuestionBody"></label>
+                <textarea rows="10" asp-for="@Model.Question.QuestionBody" class = "form-control border border-secondary"></textarea>
+                <span asp-validation-for="@Model.Question.QuestionBody" class = "text-danger"></span>
             </div>
+            <div class = "form-group">
+                <label asp-for="@Model.QuestionTag.Name">Tag </label>
+                <input type = "text" asp-for="@Model.QuestionTag.Name" class = "form-control border border-secondary"/>
+                <span asp-validation-for="@Model.QuestionTag.Name" class = "text-danger"></span>
+            </div>
+
             <div class = "mt-4">
                 <input type = "submit" class= "btn btn-primary "value="Post Your Question" />
             <a asp-controller= "Home" asp-action="Index" class = "btn btn-secondary">

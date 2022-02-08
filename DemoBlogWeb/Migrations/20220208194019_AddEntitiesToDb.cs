@@ -10,18 +10,38 @@ namespace DemoBlogWeb.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "QuestionTags",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "int", nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(type: "nvarchar(15)", maxLength: 15, nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_QuestionTags", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Questions",
                 columns: table => new
                 {
                     Id = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Title = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    QuestionBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
-                    AskedTime = table.Column<DateTime>(type: "datetime2", nullable: false)
+                    Title = table.Column<string>(type: "nvarchar(150)", maxLength: 150, nullable: false),
+                    QuestionBody = table.Column<string>(type: "nvarchar(max)", maxLength: 30000, nullable: false),
+                    AskedTime = table.Column<DateTime>(type: "datetime2", nullable: false),
+                    QuestionTagId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Questions", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Questions_QuestionTags_QuestionTagId",
+                        column: x => x.QuestionTagId,
+                        principalTable: "QuestionTags",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -32,23 +52,28 @@ namespace DemoBlogWeb.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     AnswerBody = table.Column<string>(type: "nvarchar(max)", nullable: false),
                     AnswerTime = table.Column<DateTime>(type: "datetime2", nullable: false),
-                    questionId = table.Column<int>(type: "int", nullable: false)
+                    QuestionId = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Answers", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Answers_Questions_questionId",
-                        column: x => x.questionId,
+                        name: "FK_Answers_Questions_QuestionId",
+                        column: x => x.QuestionId,
                         principalTable: "Questions",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(
-                name: "IX_Answers_questionId",
+                name: "IX_Answers_QuestionId",
                 table: "Answers",
-                column: "questionId");
+                column: "QuestionId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Questions_QuestionTagId",
+                table: "Questions",
+                column: "QuestionTagId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -58,6 +83,9 @@ namespace DemoBlogWeb.Migrations
 
             migrationBuilder.DropTable(
                 name: "Questions");
+
+            migrationBuilder.DropTable(
+                name: "QuestionTags");
         }
     }
 }
