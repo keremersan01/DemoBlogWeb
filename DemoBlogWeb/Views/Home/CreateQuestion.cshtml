@@ -1,0 +1,38 @@
+﻿@model Question
+@{
+    ViewData["Title"] = "CreateQuestion";
+}
+
+<div class = "container">
+    <div class = "border p-3 mt-4">
+        <form method = "post">
+            <h2 class = "text-primary">Ask Question</h2>
+            @*<div asp-validation-summary= "All"></div>*@
+            <div class = "form-group">
+                <label asp-for="Title"></label>
+                <input type = "text" asp-for="Title" class = "form-control"/>
+                <span asp-validation-for="Title" class = "text-danger"></span>
+            </div>
+             <div class = "form-group">
+                <label asp-for="QuestionBody"></label>
+                <textarea rows="10" asp-for="QuestionBody" class = "form-control"></textarea>
+                <span asp-validation-for="QuestionBody" class = "text-danger"></span>
+            </div>
+            <div class = "mt-4">
+                <input type = "submit" class= "btn btn-primary "value="Post Your Question" />
+            <a asp-controller= "Home" asp-action="Index" class = "btn btn-secondary">
+                Back 
+            </a>
+            </div>  
+        </form>
+    </div>
+</div>
+
+@section Scripts
+{
+    @{
+        <partial name="_ValidationScriptsPartial"/>
+    }
+}
+
+

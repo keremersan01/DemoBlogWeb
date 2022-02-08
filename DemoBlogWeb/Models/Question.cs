@@ -11,9 +11,9 @@ namespace DemoBlogWeb.Models
     {
         [Key]
         public int Id { get; set; }
-        [Required]
+        [Required, MaxLength(150)]
         public string Title { get; set; }
-        [Required]
+        [Required,MaxLength(30000), Display(Name = "Question Body")]
         public string QuestionBody { get; set; }
         public DateTime AskedTime { get; set; } = DateTime.Now;
         public ICollection<Answer> Answers { get; set; }

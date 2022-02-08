@@ -15,7 +15,7 @@ namespace DemoBlogWeb.Models
 		public string AnswerBody { get; set; }
 		public DateTime AnswerTime { get; set; } = DateTime.Now;
 		[Required]
-		public Question question { get; set; }
+		public Question Question { get; set; }
 
 	}
 }
