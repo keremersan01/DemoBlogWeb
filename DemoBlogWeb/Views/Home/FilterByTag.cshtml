@@ -2,7 +2,7 @@
 @model QuestionAndTagModel
 
 @{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Filtered By Tag";
 }
 
 
@@ -26,6 +26,7 @@
             </a>
             
     </div>
+    
     <div>
         @foreach(var obj in @Model.QuestionList)
         {
@@ -43,3 +44,4 @@
         }
     </div>
 </div>
+

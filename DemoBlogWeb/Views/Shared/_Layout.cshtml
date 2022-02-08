@@ -10,6 +10,7 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.0/font/bootstrap-icons.css">
 </head>
 <body>
+    
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
             <div class="container-fluid">
@@ -24,10 +25,11 @@
           <a class="nav-link text-dark" asp-controller="Home" asp-action="Index">Home</a>
         </li>
       </ul>
-      <form class="d-flex">
-        <input class="form-control me-sm-2" type="text" placeholder="Search">
-        <button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
-      </form>
+      @*<form class="d-flex" asp-controller= "Home" asp-action = "FilterByTag">
+        <input class="form-control me-sm-2" type="text" name="qtag" placeholder="Search By Question Tag">
+        <input type = "submit"  class= "btn btn-secondary my-2 my-sm-0"value="Search" />
+        @*<button class="btn btn-secondary my-2 my-sm-0" type="submit">Search</button>
+      </form>*@
     </div>
   </div>
         </nav>

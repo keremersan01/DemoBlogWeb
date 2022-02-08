@@ -11,5 +11,6 @@ namespace DemoBlogWeb.ViewModels
     {
         public Question Question { get; set; }
         public QuestionTag QuestionTag { get; set; }
+        public IEnumerable<Question> QuestionList { get; set; } 
     }
 }

@@ -9,9 +9,11 @@
     <div>
         <h1>@Model.Question.Title</h1>
         <br />
-        <span class="text-info">Asked time: </span><span>@Model.Question.AskedTime</span>
-        <span class="text-info">Tags:</span> <span>@Model.Question.QuestionTag.Name</span>
-       
+        <div class = "text-end">
+            <span class="text-info">Asked time: </span><span>@Model.Question.AskedTime</span>
+            <br />
+            <span class="text-info">Tag:</span> <span>@Model.Question.QuestionTag.Name</span>
+        </div>
     </div>
     <div>
         <hr />
@@ -42,19 +44,20 @@
             </div>
             <div class = "container">
             <h5>Your Answer</h5>
-            <div>
-                <form method = "post" asp-action = "CreateAnswer">
+            <div class = "m-4">
+                <form method = "post" asp-action = "CreateAnswer" >
                      <div class = "form-group">
                         <input asp-for ="@Model.Question.Id" hidden class = "form-control" />
                     </div>
                      <div class = "form-group">
-                        <textarea rows="10" asp-for="@Model.Answer.AnswerBody" class = "form-control"></textarea>
+                        <textarea rows="10" asp-for="@Model.Answer.AnswerBody" class = "form-control border border-secondary"></textarea>
                         <span asp-validation-for="@Model.Answer.AnswerBody" disabled class = "text-danger"></span>
                     </div>
-                    <input type = "submit" class= "btn btn-primary "value="Post Your Answer" />
-                <a asp-controller = "Home" asp-action="Index" class = "btn btn-secondary">
-                Back
-            </a>
+                    <div class = "mt-4">
+                        <input type = "submit" class= "btn btn-primary "value="Post Your Answer" />
+                        <a asp-controller = "Home" asp-action="Index" class = "btn btn-secondary">
+                        Back</a>
+                    </div>
                 </form>
             </div>
             <div>

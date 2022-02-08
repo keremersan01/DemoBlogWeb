@@ -31,8 +31,10 @@ namespace DemoBlogWeb.Controllers
             IEnumerable<Question> questionList = _dbContext.Questions.Include(o => o.Answers)
                 .Include(o => o.QuestionTag).ToList();
             
+            QuestionAndTagModel questionAndTagModel = new QuestionAndTagModel();
+            questionAndTagModel.QuestionList = questionList;
            
-            return View(questionList);
+            return View(questionAndTagModel);
 
         }
 
@@ -58,10 +60,11 @@ namespace DemoBlogWeb.Controllers
             {
                 ModelState.AddModelError("CustomError", "The title should be different from the question body");
             }
+                
 
                 obj.Question.QuestionTag = obj.QuestionTag;
+                obj.Question.QuestionTag.Name = obj.Question.QuestionTag.Name.ToLower();
 
-                _dbContext.QuestionTags.Add(obj.QuestionTag);
                 _dbContext.Questions.Add(obj.Question);
               
                 _dbContext.SaveChanges();
@@ -82,6 +85,30 @@ namespace DemoBlogWeb.Controllers
                     _dbContext.SaveChanges();
                     return RedirectToAction("Index");
 
+        }
+
+        [HttpPost]
+        public IActionResult FilterByTag(QuestionAndTagModel model)
+        {
+            if(model.QuestionTag.Name == null)
+            {
+                return RedirectToAction("Index");
+            }
+
+            var questionTags = _dbContext.QuestionTags.Where(o => o.Name == model.QuestionTag.Name);
+            List<Question> questionList = new List<Question>();
+            
+            foreach(var tag in questionTags)
+            {
+                Question question = _dbContext.Questions.Where(o => o.QuestionTag.Id == tag.Id).
+                    Include(question => question.Answers).Include(o => o.QuestionTag).FirstOrDefault();
+
+                questionList.Add(question);
+            }
+            QuestionAndTagModel passedModel = new QuestionAndTagModel();
+            passedModel.QuestionList = questionList;
+
+            return View(passedModel);
         }
 
 
