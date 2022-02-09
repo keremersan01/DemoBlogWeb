@@ -40,7 +40,7 @@ namespace DemoBlogWeb.Controllers
 
         public IActionResult Question(int? id)
         {
-            ViewModel mymodel = new ViewModel();
+            QuestionAndAnswerModel mymodel = new QuestionAndAnswerModel();
             mymodel.Question = _dbContext.Questions.Include(question => question.Answers)
                 .Include(o => o.QuestionTag).SingleOrDefault(u => u.Id == id);
             mymodel.Answer = new Answer();
@@ -74,7 +74,7 @@ namespace DemoBlogWeb.Controllers
         }
 
         [HttpPost]
-        public IActionResult CreateAnswer(ViewModel model)
+        public IActionResult CreateAnswer(QuestionAndAnswerModel model)
         {
             
             Question question = _dbContext.Questions.Find(model.Question.Id);
@@ -105,8 +105,15 @@ namespace DemoBlogWeb.Controllers
 
                 questionList.Add(question);
             }
+
+            if(questionList.Count == 0)
+            {
+                return RedirectToAction("Index");
+            }
+
             QuestionAndTagModel passedModel = new QuestionAndTagModel();
             passedModel.QuestionList = questionList;
+            passedModel.QuestionTag = model.QuestionTag;
 
             return View(passedModel);
         }

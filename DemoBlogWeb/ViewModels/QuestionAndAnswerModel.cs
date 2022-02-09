@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace DemoBlogWeb.ViewModels
 {
-    public class ViewModel
+    public class QuestionAndAnswerModel
     {
         public Question Question { get; set; }
         public Answer Answer { get; set; }

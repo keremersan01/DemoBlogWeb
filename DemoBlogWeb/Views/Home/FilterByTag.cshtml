@@ -9,11 +9,11 @@
 <div class = "container p-3 ">
     <div class = "row p-4 ">
         <div class = "col-6">
-            <h2 class = "text-primary">Questions</h2>
+            <h2 class = "text-primary">Questions tagged [@Model.QuestionTag.Name]</h2>
         </div>
         <div class = "col-6 text-end">
                 <form class="d-flex" asp-controller= "Home" asp-action = "FilterByTag" >
-                <input class="form-control me-sm-2" asp-for="@Model.QuestionTag.Name" placeholder="Search By Question Tag">
+                <input class="form-control me-sm-2" asp-for="@Model.QuestionTag.Name" placeholder="Search by Tag">
                 <input type = "submit"  class= "btn btn-secondary my-2 my-sm-0 col-xs-2"value="Search" />
                 </form>
         </div>
