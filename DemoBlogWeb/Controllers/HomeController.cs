@@ -33,7 +33,6 @@ namespace DemoBlogWeb.Controllers
             
             QuestionAndTagModel questionAndTagModel = new QuestionAndTagModel();
             questionAndTagModel.QuestionList = questionList;
-           
             return View(questionAndTagModel);
 
         }
@@ -59,8 +58,7 @@ namespace DemoBlogWeb.Controllers
             if (obj.Question.Title == obj.Question.QuestionBody.ToString())
             {
                 ModelState.AddModelError("CustomError", "The title should be different from the question body");
-            }
-                
+            }   
 
                 obj.Question.QuestionTag = obj.QuestionTag;
                 obj.Question.QuestionTag.Name = obj.Question.QuestionTag.Name.ToLower();
@@ -68,8 +66,8 @@ namespace DemoBlogWeb.Controllers
                 _dbContext.Questions.Add(obj.Question);
               
                 _dbContext.SaveChanges();
-                return RedirectToAction("Index");
-            
+            TempData["success"] = "Question Posted Successfully";
+            return RedirectToAction("Index");
             
         }
 
@@ -83,7 +81,8 @@ namespace DemoBlogWeb.Controllers
                 
                     _dbContext.Answers.Add(model.Answer);
                     _dbContext.SaveChanges();
-                    return RedirectToAction("Index");
+            TempData["success"] = "Answer Posted Successfully";
+            return RedirectToAction("Index");
 
         }
 
@@ -92,6 +91,7 @@ namespace DemoBlogWeb.Controllers
         {
             if(model.QuestionTag.Name == null)
             {
+                TempData["error"] = "Please input a tag to search";
                 return RedirectToAction("Index");
             }
 
@@ -108,13 +108,13 @@ namespace DemoBlogWeb.Controllers
 
             if(questionList.Count == 0)
             {
+                TempData["error"] = "No question with tag " + "["+model.QuestionTag.Name+"]";
                 return RedirectToAction("Index");
             }
 
             QuestionAndTagModel passedModel = new QuestionAndTagModel();
             passedModel.QuestionList = questionList;
             passedModel.QuestionTag = model.QuestionTag;
-
             return View(passedModel);
         }
 
