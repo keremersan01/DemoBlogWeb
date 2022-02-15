@@ -21,7 +21,7 @@
 
     <br />
     <div class = "text-end mb-3">
-        <a asp-controller = "Home" asp-action="CreateQuestion" class = "btn btn-primary ">
+        <a asp-controller = "Home" asp-action="CreateQuestion" class = "btn btn-primary " name = "askQuestionButton">
                 <i class="bi bi-plus-circle"></i> &nbsp; Ask Question
             </a>
             
@@ -32,9 +32,9 @@
             <div class = "container">
                 <div>
                      <span class = "text-success border border-success p-1">@obj.Answers.Count answers</span>
-                         <a  asp-controller="Home" asp-action="Question" asp-route-id="@obj.Id">@obj.Title</a>
+                         <a  class = "questions" asp-controller="Home" asp-action="Question" asp-route-id="@obj.Id">@obj.Title</a>
                          <div class = "text-end">
-                             <span>Tag:</span> <span class = "text-info">@obj.QuestionTag.Name</span>
+                             <span>Tag:</span> <span class = "text-info" id = "qtag">@obj.QuestionTag.Name</span>
                          </div>
                 </div>
                 <br>

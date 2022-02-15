@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace DemoBlogWeb.Migrations
 {
     [DbContext(typeof(DemoBlogDbContext))]
-    [Migration("20220208194019_AddEntitiesToDb")]
+    [Migration("20220209092840_AddEntitiesToDb")]
     partial class AddEntitiesToDb
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)

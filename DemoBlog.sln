@@ -5,6 +5,8 @@ VisualStudioVersion = 17.0.32112.339
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DemoBlogWeb", "DemoBlogWeb\DemoBlogWeb.csproj", "{6D0635F7-5B1F-4ECE-B12B-0F900F402EB9}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CreditCards.UITests", "CreditCards.UITests\CreditCards.UITests.csproj", "{A880FF5A-746B-4920-9B35-5F6892567CDD}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -15,6 +17,10 @@ Global
 		{6D0635F7-5B1F-4ECE-B12B-0F900F402EB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6D0635F7-5B1F-4ECE-B12B-0F900F402EB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{6D0635F7-5B1F-4ECE-B12B-0F900F402EB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A880FF5A-746B-4920-9B35-5F6892567CDD}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A880FF5A-746B-4920-9B35-5F6892567CDD}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A880FF5A-746B-4920-9B35-5F6892567CDD}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A880FF5A-746B-4920-9B35-5F6892567CDD}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
