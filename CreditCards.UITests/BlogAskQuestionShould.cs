@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
 
@@ -19,13 +20,22 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
-                IWebElement askQuestionButton = driver.FindElement(By.Name("askQuestionButton"));
+                // Using explicit wait element.
+
+                WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
+                IWebElement askQuestionButton = wait.Until((d) => d.FindElement(By.Name("askQuestionButton")));
                 askQuestionButton.Click();
+
+                //IWebElement askQuestionButton = driver.FindElement(By.Name("askQuestionButton"));
+                //askQuestionButton.Click();
+
+
 
                 Assert.Equal("CreateQuestion - DemoBlogWeb", driver.Title);
                 Assert.Equal(askQuestionUrl, driver.Url);
             }
         }
+
 
         [Fact]
         [Trait("Category", "Application")]
@@ -78,6 +88,22 @@ namespace CreditCards.UITests
         [Fact]
         [Trait("Category", "Application")]
         public void BeInitiatedFromHomePageByXPath_AskQuestion()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                IWebElement askQuestionButton = driver.FindElement(By.XPath("/html/body/div/main/div/div[2]/a"));
+                askQuestionButton.Click();
+
+                Assert.Equal("CreateQuestion - DemoBlogWeb", driver.Title);
+                Assert.Equal(askQuestionUrl, driver.Url);
+            }
+        }
+
+        [Fact]
+        [Trait("Category", "Application")]
+        public void BeInitiatedFromHomePageByRelativeXPath_AskQuestion()
         {
             using (IWebDriver driver = new ChromeDriver())
             {

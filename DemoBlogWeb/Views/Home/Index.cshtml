@@ -34,7 +34,7 @@
                      <span class = "text-success border border-success p-1">@obj.Answers.Count answers</span>
                          <a  class = "questions" asp-controller="Home" asp-action="Question" asp-route-id="@obj.Id">@obj.Title</a>
                          <div class = "text-end">
-                             <span>Tag:</span> <span class = "text-info" id = "qtag">@obj.QuestionTag.Name</span>
+                             <span>Tag:</span> <span class = "text-info tags" id = "qtag">@obj.QuestionTag.Name</span>
                          </div>
                 </div>
                 <br>

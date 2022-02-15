@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
+using System.Collections.ObjectModel;
 using Xunit;
 
 namespace CreditCards.UITests
@@ -86,6 +87,21 @@ namespace CreditCards.UITests
                 Assert.Equal(HomeUrl, driver.Url);
 
                 // TODO assert that page was reloaded.
+            }
+        }
+        [Fact]
+        public void SelectingMultipleElements_FromHomePage()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                driver.Navigate().GoToUrl(HomeUrl);
+
+                ReadOnlyCollection<IWebElement> questionTags = driver.FindElements(By.ClassName("tags"));
+
+                Assert.Equal("c++", questionTags[0].Text);
+                Assert.Equal("python", questionTags[1].Text);
+                Assert.Equal("c++", questionTags[2].Text);
+
             }
         }
     }
