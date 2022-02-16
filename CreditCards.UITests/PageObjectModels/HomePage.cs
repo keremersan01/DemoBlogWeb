@@ -16,11 +16,20 @@ namespace DemoBlog.UITests.PageObjectModels
             Driver = driver;
         }
 
-        public ReadOnlyCollection<IWebElement> QuestionTags 
+        public ReadOnlyCollection<string> QuestionTags
         {
             get
             {
-                return Driver.FindElements(By.ClassName("tags"));
+                var tags = new List<string>();
+                
+                var tagElements = Driver.FindElements(By.ClassName("tags"));
+
+                for(int i = 0; i < tagElements.Count; i++)
+                {
+                    tags.Add(tagElements[i].Text);
+                }
+
+                return tags.AsReadOnly();
             }
         }
     }

@@ -99,11 +99,9 @@ namespace CreditCards.UITests
 
                 HomePage homePage = new HomePage(driver);
 
-                ReadOnlyCollection<IWebElement> questionTags = homePage.QuestionTags;
-
-                Assert.Equal("c++", questionTags[0].Text);
-                Assert.Equal("python", questionTags[1].Text);
-                Assert.Equal("c++", questionTags[2].Text);
+                Assert.Equal("c++", homePage.QuestionTags[0]);
+                Assert.Equal("python", homePage.QuestionTags[1]);
+                Assert.Equal("c++", homePage.QuestionTags[2]);
 
             }
         }
