@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 using System;
 using Xunit;
@@ -114,6 +115,63 @@ namespace CreditCards.UITests
 
                 Assert.Equal("CreateQuestion - DemoBlogWeb", driver.Title);
                 Assert.Equal(askQuestionUrl, driver.Url);
+            }
+        }
+
+        
+        [Fact]
+        public void BeSubmittedWhenValid()
+        {
+            using(IWebDriver driver = new ChromeDriver())
+            {
+                // To fix Debugging "Element is not clickable at point" error
+                driver.Manage().Window.Maximize();
+
+                driver.Navigate().GoToUrl(askQuestionUrl);
+
+                driver.FindElement(By.Id("Question_Title")).SendKeys("SELENIUM TEST SORUSU");
+                driver.FindElement(By.Id("Question_QuestionBody")).SendKeys("SELENIUM TEST SORU GÖVDESİ");
+                driver.FindElement(By.Id("QuestionTag_Name")).SendKeys("TEST TAG");
+
+                //driver.FindElement(By.Id("Question_QuestionBody")).Submit();
+
+                driver.FindElement(By.Id("submit")).Click();
+
+                // You can do asserts if it is necessary
+
+
+            }
+        }
+
+        [Fact]
+        public void BeSubmittedWhenInvalid()
+        {
+            using (IWebDriver driver = new ChromeDriver())
+            {
+                // To fix Debugging "Element is not clickable at point" error
+                driver.Manage().Window.Maximize();
+
+                driver.Navigate().GoToUrl(askQuestionUrl);
+
+                driver.FindElement(By.Id("Question_Title")).SendKeys("");
+                driver.FindElement(By.Id("Question_QuestionBody")).SendKeys("SELENIUM TEST SORU GÖVDESİ");
+                driver.FindElement(By.Id("QuestionTag_Name")).SendKeys("TEST TAG");
+
+                //driver.FindElement(By.Id("Question_QuestionBody")).Submit();
+
+                driver.FindElement(By.Id("submit")).Click();
+
+              //  var validationErrors = driver.FindElements(By.ClassName("text-danger field-validation-error"));
+
+                Assert.Equal(askQuestionUrl, driver.Url);
+
+                // fixing invalidations
+                driver.FindElement(By.Id("Question_Title")).SendKeys("fixing invalidation");
+                driver.FindElement(By.Id("submit")).Click();
+
+                Assert.Equal(HomeUrl, driver.Url);
+
+
             }
         }
     }
