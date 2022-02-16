@@ -11,6 +11,7 @@ namespace DemoBlog.UITests.PageObjectModels
     public class HomePage
     {
         private readonly IWebDriver Driver;
+        private const string PageUrl = "https://localhost:44303/";
         public HomePage(IWebDriver driver)
         {
             Driver = driver;
@@ -20,6 +21,7 @@ namespace DemoBlog.UITests.PageObjectModels
         {
             get
             {
+                // var tags = new List<(string name,string price)>(); gibi bir tuple kullanımı da yapılabilir.
                 var tags = new List<string>();
                 
                 var tagElements = Driver.FindElements(By.ClassName("tags"));
@@ -31,6 +33,11 @@ namespace DemoBlog.UITests.PageObjectModels
 
                 return tags.AsReadOnly();
             }
+        }
+
+        public void NavigateTo()
+        {
+            Driver.Navigate().GoToUrl(PageUrl);
         }
     }
 }

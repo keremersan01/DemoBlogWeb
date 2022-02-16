@@ -10,9 +10,10 @@ namespace CreditCards.UITests
     public class BlogWebAppShould
     {
 
-        private const string HomeUrl = "https://localhost:44303/";
+       
         private const string HomeTitle = "Home Page - DemoBlogWeb";
         private const string AskQuestionUrl = "https://localhost:44303/Home/CreateQuestion";
+        private const string HomeUrl = "https://localhost:44303/";
 
 
         [Fact]
@@ -95,9 +96,10 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-
                 HomePage homePage = new HomePage(driver);
+
+                homePage.NavigateTo();
+     
 
                 Assert.Equal("c++", homePage.QuestionTags[0]);
                 Assert.Equal("python", homePage.QuestionTags[1]);
