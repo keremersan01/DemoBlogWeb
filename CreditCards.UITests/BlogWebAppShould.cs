@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using DemoBlog.UITests.PageObjectModels;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using System;
 using System.Collections.ObjectModel;
@@ -96,7 +97,9 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
-                ReadOnlyCollection<IWebElement> questionTags = driver.FindElements(By.ClassName("tags"));
+                HomePage homePage = new HomePage(driver);
+
+                ReadOnlyCollection<IWebElement> questionTags = homePage.QuestionTags;
 
                 Assert.Equal("c++", questionTags[0].Text);
                 Assert.Equal("python", questionTags[1].Text);
