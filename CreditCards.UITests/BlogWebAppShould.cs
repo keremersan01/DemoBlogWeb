@@ -25,6 +25,16 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
+                driver.Manage().Window.Maximize();
+                driver.Manage().Window.Minimize();
+
+                driver.Manage().Window.Size = new System.Drawing.Size(150, 150);
+
+                driver.Manage().Window.Position = new System.Drawing.Point(1, 1);
+                driver.Manage().Window.Position = new System.Drawing.Point(50, 50);
+                driver.Manage().Window.Position = new System.Drawing.Point(100, 100);
+
+                driver.Manage().Window.FullScreen();
 
                 Assert.Equal(HomeTitle, driver.Title);
                 Assert.Equal(HomeUrl, driver.Url);
