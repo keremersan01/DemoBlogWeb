@@ -23,21 +23,20 @@ namespace CreditCards.UITests
         {
             using(IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
 
                 driver.Manage().Window.Maximize();
                 driver.Manage().Window.Minimize();
 
-                driver.Manage().Window.Size = new System.Drawing.Size(150, 150);
+                driver.Manage().Window.Size = new System.Drawing.Size(600, 600);
 
                 driver.Manage().Window.Position = new System.Drawing.Point(1, 1);
                 driver.Manage().Window.Position = new System.Drawing.Point(50, 50);
                 driver.Manage().Window.Position = new System.Drawing.Point(100, 100);
 
                 driver.Manage().Window.FullScreen();
-
-                Assert.Equal(HomeTitle, driver.Title);
-                Assert.Equal(HomeUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -48,12 +47,11 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
                 driver.Navigate().Refresh();
 
-                Assert.Equal(HomeTitle, driver.Title);
-                Assert.Equal(HomeUrl, driver.Url);
+                homePage.EnsurePageLoaded();
             }
         }
 
@@ -64,20 +62,18 @@ namespace CreditCards.UITests
         {
             using (IWebDriver driver = new ChromeDriver())
             {
-                driver.Navigate().GoToUrl(HomeUrl);
-                IWebElement qtagElement = driver.FindElement(By.Id("qtag"));
-                string elementName = qtagElement.Text;
+                var homePage = new HomePage(driver);
+                homePage.NavigateTo();
+
+                string FirstQTag = homePage.FirstQTag;
 
                 driver.Navigate().GoToUrl(AskQuestionUrl);
                 driver.Navigate().Back();
 
-                
+                homePage.EnsurePageLoaded();
 
-                Assert.Equal(HomeTitle, driver.Title);
-                Assert.Equal(HomeUrl, driver.Url);
-
-                string reloadedQTagElement = driver.FindElement(By.Id("qtag")).Text;
-                Assert.Equal(elementName, reloadedQTagElement);
+                string ReloadedFirstQTag = homePage.FirstQTag;
+                Assert.Equal(FirstQTag, ReloadedFirstQTag);
 
                 // TODO assert that page was reloaded.
             }

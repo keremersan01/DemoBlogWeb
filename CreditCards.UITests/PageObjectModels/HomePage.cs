@@ -12,10 +12,15 @@ namespace DemoBlog.UITests.PageObjectModels
     {
         private readonly IWebDriver Driver;
         private const string PageUrl = "https://localhost:44303/";
+        private const string PageTitle = "Home Page - DemoBlogWeb";
+
         public HomePage(IWebDriver driver)
         {
             Driver = driver;
+             
         }
+
+        public string FirstQTag => Driver.FindElement(By.Id("qtag")).Text;
 
         public ReadOnlyCollection<string> QuestionTags
         {
@@ -35,9 +40,21 @@ namespace DemoBlog.UITests.PageObjectModels
             }
         }
 
+
         public void NavigateTo()
         {
             Driver.Navigate().GoToUrl(PageUrl);
+            EnsurePageLoaded();
+        }
+
+        public void EnsurePageLoaded()
+        {
+            bool pageLoaded = (Driver.Url == PageUrl) && (Driver.Title == PageTitle);
+
+            if(!pageLoaded)
+            {
+                throw new Exception("Failed to Load Page");
+            }
         }
     }
 }

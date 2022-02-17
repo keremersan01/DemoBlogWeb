@@ -2,6 +2,7 @@
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using SeleniumExtras.WaitHelpers;
 using System;
 using Xunit;
 
@@ -24,7 +25,7 @@ namespace CreditCards.UITests
                 // Using explicit wait element.
 
                 WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(3));
-                IWebElement askQuestionButton = wait.Until((d) => d.FindElement(By.Name("askQuestionButton")));
+                IWebElement askQuestionButton = wait.Until(ExpectedConditions.ElementToBeClickable(By.Name("askQuestionButton")));
                 askQuestionButton.Click();
 
                 //IWebElement askQuestionButton = driver.FindElement(By.Name("askQuestionButton"));
@@ -110,7 +111,7 @@ namespace CreditCards.UITests
             {
                 driver.Navigate().GoToUrl(HomeUrl);
 
-                IWebElement askQuestionButton = driver.FindElement(By.XPath("/html/body/div/main/div/div[2]/a"));
+                IWebElement askQuestionButton = driver.FindElement(By.XPath("//a[@href='/Home/CreateQuestion']"));
                 askQuestionButton.Click();
 
                 Assert.Equal("CreateQuestion - DemoBlogWeb", driver.Title);
@@ -158,6 +159,8 @@ namespace CreditCards.UITests
                 driver.FindElement(By.Id("QuestionTag_Name")).SendKeys("TEST TAG");
 
                 //driver.FindElement(By.Id("Question_QuestionBody")).Submit();
+
+                
 
                 driver.FindElement(By.Id("submit")).Click();
 
